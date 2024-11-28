@@ -13,6 +13,10 @@
         public virtual bool IsDeleted { get; protected set; }
         public virtual IList<User> ReadBy { get; protected set; } = new List<User>();
         public virtual Chat Chat { get; protected set; }
+
+        public void Delete() {
+            IsDeleted = true;
+        }
     }
 
     public class Chat {
