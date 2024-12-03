@@ -1,14 +1,13 @@
-﻿using Messanager.Domain;
+﻿using Messenger.Domain;
 
-namespace Messenger.Application.Repositories {
-    public interface IUserRepository {
-        public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-        public Task<IList<Guid>> GetChatParticipantsIdsByChatId(Guid chatId, CancellationToken cancellationToken);
-    }
+namespace Messenger.Application.Repositories;
 
-    public interface IMessageRepository {
-        public Task CreateAsync(Message message, CancellationToken cancellationToken);
-        public Task DeleteAsync(Message message, CancellationToken cancellationToken);
-        public Task UpdateAsync(Message message, CancellationToken cancellationToken);
-    }
+public interface IUserRepository {
+    public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    public Task<IList<Guid>> GetChatParticipantsIdsByChatId(Guid chatId, CancellationToken cancellationToken);
+
+    public IAsyncEnumerable<(Guid userId,string email, List<Guid> messageIds)> GetUserMailsForUnreadMessagesNotification(
+        Guid[] offlineUserIds, CancellationToken cancellationToken = default);
+
+    public Task<IList<Guid>> GetUserIds(CancellationToken cancellationToken = default);
 }
